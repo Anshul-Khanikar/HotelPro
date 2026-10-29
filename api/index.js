@@ -22,6 +22,12 @@ const app = express();
 app.use(express.json({ limit: '100kb' }));
 app.use(cors({ origin: true, credentials: true }));
 
+// Keep liveness checks independent of the database so deploy health checks can
+// distinguish a running function from a database outage.
+app.get(['/health', '/api/v1/health', '/api/health'], (req, res) => {
+  res.status(200).json({ status: 'OK', serverless: true, timestamp: new Date() });
+});
+
 // Database connection caching for serverless environments
 let cachedConnection = null;
 
@@ -62,7 +68,7 @@ app.use(async (req, res, next) => {
     console.error('Database connection error:', err);
     return res.status(500).json({
       success: false,
-      message: 'Database connection failed: ' + err.message
+      message: 'Database connection failed. Check the deployment database configuration.'
     });
   }
 });
@@ -71,11 +77,6 @@ app.use(async (req, res, next) => {
 app.use('/api/v1/auth', require('../server/src/routes/authRoutes'));
 app.use('/api/v1/hotels', require('../server/src/routes/hotelRoutes'));
 app.use('/api/v1/bookings', require('../server/src/routes/bookingRoutes'));
-
-// Health check
-app.get(['/health', '/api/v1/health', '/api/health'], (req, res) => {
-  res.status(200).json({ status: 'OK', serverless: true, timestamp: new Date() });
-});
 
 // 404 handler for API routes
 app.use((req, res) => {
@@ -87,7 +88,7 @@ app.use((err, req, res, next) => {
   console.error('Unhandled server error:', err);
   res.status(err.status || 500).json({
     success: false,
-    message: err.message || 'Internal Server Error'
+    message: err.status && err.status < 500 ? (err.message || 'Request failed') : 'Internal Server Error'
   });
 });
 
