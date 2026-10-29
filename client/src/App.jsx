@@ -262,7 +262,7 @@ function HotelDetail() {
         checkOutDate: checkOut,
         guestCount: Number(guests)
       });
-      setSuccess(`Reservation Confirmed! Reference: ${res.data.data.bookingReference}`);
+      setSuccess(`Your reservation request is pending confirmation and payment. Reference: ${res.data.data.bookingReference}`);
     } catch (err) {
       setError(err.response?.data?.message || 'Booking failed. Room might already be booked for these dates.');
     } finally {
@@ -416,7 +416,7 @@ function HotelDetail() {
             )}
             {success && (
               <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl mb-4 text-xs font-medium leading-relaxed">
-                <span className="font-bold text-sm block mb-1">🎉 Reservation Confirmed!</span>
+                <span className="font-bold text-sm block mb-1">🎉 Reservation Request Received</span>
                 <p className="mb-2">{success}</p>
                 <Link to="/bookings" className="text-emerald-700 underline font-semibold block mt-1">
                   View in My Bookings →
