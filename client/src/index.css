@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --waystay-ink: #193a31;
+  --waystay-forest: #214b3d;
+  --waystay-paper: #f7f4eb;
+  --waystay-clay: #bd7659;
+  --waystay-line: #e7e1d5;
+}
+
+html {
+  background: var(--waystay-paper);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--waystay-paper);
+  color: #302f29;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  letter-spacing: 0.005em;
+}
+
+.font-sans {
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.035em;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+nav {
+  background-color: var(--waystay-ink) !important;
+  box-shadow: 0 8px 28px rgb(25 58 49 / 12%);
+}
+
+nav > div,
+footer > div {
+  max-width: 78rem;
+}
+
+.brand-mark {
+  display: inline-grid;
+  width: 1.9rem;
+  height: 1.9rem;
+  place-items: center;
+  border: 1px solid rgb(239 219 175 / 55%);
+  border-radius: 50%;
+  color: #eedbb0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(112deg, #18392f 0%, #315947 57%, #765543 130%);
+}
+
+main > div {
+  animation: waystay-arrive 420ms ease-out both;
+}
+
+input,
+select,
+textarea {
+  accent-color: var(--waystay-forest);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--waystay-forest) !important;
+  --tw-ring-color: rgb(33 75 61 / 30%) !important;
+}
+
+footer {
+  background: var(--waystay-ink) !important;
+  border-color: rgb(255 255 255 / 10%) !important;
+}
+
+@keyframes waystay-arrive {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
